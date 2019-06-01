@@ -156,10 +156,10 @@ class AudioPlayer {
             progressBar: (e) => {
                 let x = e.offsetX;
                 let w = this.gui.progressBar.DOMElement.offsetWidth;
-                let newCurrentTime = this.gui.totalTime.value * (x/w);
+                let newCurrentTime = this.gui.totalTime.value * (x / w);
                 this.player.currentTime = newCurrentTime;
                 this.gui = {
-                    currentTime: {value: newCurrentTime, DOMElement: this.gui.currentTime.DOMElement}
+                    currentTime: { value: newCurrentTime, DOMElement: this.gui.currentTime.DOMElement }
                 }
             }
         }
@@ -168,9 +168,18 @@ class AudioPlayer {
         this._updateBasigGUIElement(this.gui.currentTime);
     }
 
+    _toMinSegundo(value) {
+        let minutes = Math.floor(value / 60);
+        let seconds = Math.floor(value - (minutes * 60));
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        var result = minutes + ":" + seconds;  
+        return result;
+    }
+
     _updateBasigGUIElement(el) {
         if (el.DOMElement instanceof HTMLElement) {
-            el.DOMElement.innerHTML = el.value;
+            el.DOMElement.innerHTML = this._toMinSegundo(el.value);
         }
     }
 
